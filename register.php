@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </hgroup>
             
             <?php if (!empty($error_message)): ?>
-                <p style="color: #c62828;"><?php echo $error_message; ?></p>
+                <p style="color: #c62828;"><?php echo htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8'); ?></p>
             <?php endif; ?>
 
             <form method="POST" action="register.php">

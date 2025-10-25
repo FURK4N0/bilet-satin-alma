@@ -21,7 +21,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
     $success_message = "Kaydınız başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz.";
 }
 if (isset($_GET['redirect_message'])) {
-    $error_message = htmlspecialchars($_GET['redirect_message']);
+    $error_message = htmlspecialchars($_GET['redirect_message'], ENT_QUOTES, 'UTF-8');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,7 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
-            // Giriş başarılı! Session bilgilerini kaydet.
+            // Giriş başarılı: oturum kimliğini yenileyin
+            session_regenerate_id(true);
+
+            // Session bilgilerini kaydet.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_full_name'] = $user['full_name'];
             $_SESSION['user_role'] = $user['role'];
